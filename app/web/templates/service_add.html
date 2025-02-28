@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}Servis Ekle | OCP Mikro Servis Monitoring{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="fs-2">Servis Ekle</h1>
+            <a href="/services" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Servislere Dön
+            </a>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="POST" action="/add/service">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Servis Adı <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                        <div class="form-text">Servisin tanımlayıcı adı</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="url" class="form-label">URL <span class="text-danger">*</span></label>
+                        <input type="url" class="form-control" id="url" name="url" required>
+                        <div class="form-text">Servisin health-check endpoint'inin tam URL'i (örn: http://example.com/health)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Açıklama</label>
+                        <textarea class="form-control" id="description" name="description" rows="2"></textarea>
+                        <div class="form-text">Servisi kısaca açıklayın (isteğe bağlı)</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="check_interval" class="form-label">Kontrol Aralığı (saniye)</label>
+                            <input type="number" class="form-control" id="check_interval" name="check_interval" value="60" min="5">
+                            <div class="form-text">Servisin ne sıklıkta kontrol edileceği</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="timeout" class="form-label">Timeout (saniye)</label>
+                            <input type="number" class="form-control" id="timeout" name="timeout" value="5" min="1">
+                            <div class="form-text">Yanıt bekleme süresi</div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-end">
+                        <a href="/services" class="btn btn-outline-secondary me-2">İptal</a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-plus-lg"></i> Servis Ekle
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

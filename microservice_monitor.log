@@ -1863,3 +1863,21 @@ jinja2.exceptions.TemplateNotFound: service_add.html
 2025-02-28 22:27:13,080 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
 2025-02-28 22:27:13,081 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
 2025-02-28 22:27:13,081 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 22:27:13] "GET /api/services HTTP/1.1" 200 -
+2025-02-28 22:28:00,422 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 22:28:00,423 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 22:28:00,423 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 22:28:00] "GET /api/services HTTP/1.1" 200 -
+2025-02-28 22:28:45,096 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 22:28:45,097 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 22:28:45,097 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 22:28:45] "GET /api/services HTTP/1.1" 200 -
+2025-02-28 22:29:45,033 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 22:29:45,034 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 22:29:45,034 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 22:29:45] "GET /api/services HTTP/1.1" 200 -
+2025-02-28 22:29:53,473 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 22:29:53,473 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 22:29:53,473 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 22:29:53] "GET /services/1 HTTP/1.1" 200 -
+2025-02-28 22:30:50,597 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 22:30:50,598 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 22:30:50,599 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 22:30:50] "GET /services/1 HTTP/1.1" 200 -
+2025-02-28 22:30:51,727 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 22:30:51,727 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 22:30:51,727 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 22:30:51] "GET /services/1 HTTP/1.1" 200 -

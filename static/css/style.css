@@ -1,0 +1,392 @@
+:root {
+  --primary-color: #3498db;
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --dark-color: #2c3e50;
+  --light-color: #ecf0f1;
+  --gray-color: #95a5a6;
+  --body-bg: #f7f9fb;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--body-bg);
+  color: #333;
+}
+
+/* Header */
+.app-header {
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.logo i {
+  color: var(--primary-color);
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  width: 250px;
+  padding: 20px 0;
+  background-color: #fff;
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 900;
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav-item {
+  padding: 10px 20px;
+  margin: 5px 0;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-nav-item:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.sidebar-nav-item.active {
+  background-color: rgba(52, 152, 219, 0.2);
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.sidebar-nav-link {
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-nav-link i {
+  margin-right: 10px;
+}
+
+/* Main Content */
+.main-content {
+  margin-left: 250px;
+  margin-top: 60px;
+  padding: 20px;
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Cards */
+.stats-card {
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.stats-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card-header {
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 15px 20px;
+  font-weight: 600;
+}
+
+.stats-card-body {
+  padding: 20px;
+}
+
+.stats-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.stats-label {
+  color: var(--gray-color);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.services-list {
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 700;
+  border-radius: 20px;
+}
+
+.status-badge-up {
+  background-color: rgba(46, 204, 113, 0.15);
+  color: var(--success-color);
+}
+
+.status-badge-down {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: var(--danger-color);
+}
+
+.status-badge-unknown {
+  background-color: rgba(149, 165, 166, 0.15);
+  color: var(--gray-color);
+}
+
+.status-badge i {
+  margin-right: 5px;
+}
+
+/* Response Time Indicator */
+.response-time {
+  display: inline-flex;
+  align-items: center;
+}
+
+.response-time i {
+  margin-right: 5px;
+}
+
+.response-fast {
+  color: var(--success-color);
+}
+
+.response-medium {
+  color: var(--warning-color);
+}
+
+.response-slow {
+  color: var(--danger-color);
+}
+
+/* Uptime Chart */
+.uptime-chart {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+}
+
+.uptime-slice {
+  height: 100%;
+  flex: 1;
+  margin: 0 1px;
+}
+
+.uptime-slice-up {
+  background-color: var(--success-color);
+}
+
+.uptime-slice-down {
+  background-color: var(--danger-color);
+}
+
+.uptime-slice-unknown {
+  background-color: var(--gray-color);
+}
+
+/* Chart Containers */
+.chart-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.chart-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Add service/endpoint form */
+.add-form {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-submit-btn {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.form-submit-btn:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+/* Loading indicator */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: var(--primary-color);
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Toast notifications */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1500;
+}
+
+.toast {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  overflow: hidden;
+  width: 350px;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: toast-in 0.3s ease forwards;
+}
+
+.toast-header {
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.toast-body {
+  padding: 12px 15px;
+}
+
+.toast-success .toast-header {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: var(--success-color);
+}
+
+.toast-error .toast-header {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--danger-color);
+}
+
+.toast-info .toast-header {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: var(--primary-color);
+}
+
+@keyframes toast-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tooltip */
+.tooltip-inner {
+  max-width: 200px;
+  padding: 5px 10px;
+  color: #fff;
+  background-color: var(--dark-color);
+  border-radius: 4px;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a1a1a;
+    color: #e1e1e1;
+  }
+  
+  .app-header, .sidebar, .stats-card, .services-list, .chart-container, .add-form {
+    background-color: #2a2a2a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .sidebar-nav-link {
+    color: #e1e1e1;
+  }
+  
+  .sidebar-nav-item:hover {
+    background-color: rgba(52, 152, 219, 0.2);
+  }
+  
+  .sidebar-nav-item.active {
+    background-color: rgba(52, 152, 219, 0.3);
+  }
+  
+  .stats-card-header, .uptime-chart {
+    border-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+  
+  .loading-overlay {
+    background-color: rgba(26, 26, 26, 0.7);
+  }
+  
+  .toast {
+    background-color: #2a2a2a;
+  }
+}

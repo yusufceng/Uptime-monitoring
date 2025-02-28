@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block title %}Prometheus | OCP Mikro Servis Monitoring{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="fs-2">Prometheus Endpoints</h1>
+            <a href="/add/prometheus" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Prometheus Ekle
+            </a>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                {% if endpoints %}
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Endpoint</th>
+                            <th>URL</th>
+                            <th>Sorgu</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for endpoint in endpoints %}
+                        <tr>
+                            <td>
+                                <strong>{{ endpoint.name }}</strong>
+                                {% if endpoint.description %}
+                                <small class="d-block text-muted">{{ endpoint.description }}</small>
+                                {% endif %}
+                            </td>
+                            <td><small class="text-muted">{{ endpoint.url }}</small></td>
+                            <td>
+                                {% if endpoint.query %}
+                                <code>{{ endpoint.query }}</code>
+                                {% else %}
+                                <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="/prometheus/{{ endpoint.id }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-graph-up"></i> Detay
+                                </a>
+                                <a href="/prometheus/{{ endpoint.id }}/edit" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-pencil"></i> Düzenle
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="p-4 text-center">
+                    <i class="bi bi-info-circle fs-2 text-muted mb-3"></i>
+                    <p>Henüz Prometheus endpoint'i eklenmemiş.</p>
+                    <a href="/add/prometheus" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i> Prometheus Ekle
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

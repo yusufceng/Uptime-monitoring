@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}Servisler | OCP Mikro Servis Monitoring{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="fs-2">Servisler</h1>
+            <a href="/add/service" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> Servis Ekle
+            </a>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                {% if services %}
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Servis</th>
+                            <th>URL</th>
+                            <th>Durum</th>
+                            <th>Yanıt Süresi</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for service in services %}
+                        <tr>
+                            <td>
+                                <strong>{{ service.name }}</strong>
+                                {% if service.description %}
+                                <small class="d-block text-muted">{{ service.description }}</small>
+                                {% endif %}
+                            </td>
+                            <td><small class="text-muted">{{ service.url }}</small></td>
+                            <td>
+                                {% if service.last_check and service.last_check.is_up %}
+                                <span class="status-badge status-badge-up">
+                                    <i class="bi bi-check-circle"></i> Çalışıyor
+                                </span>
+                                {% elif service.last_check %}
+                                <span class="status-badge status-badge-down">
+                                    <i class="bi bi-x-circle"></i> Çalışmıyor
+                                </span>
+                                {% else %}
+                                <span class="status-badge status-badge-unknown">
+                                    <i class="bi bi-question-circle"></i> Bilinmiyor
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if service.last_check %}
+                                <span class="response-time">
+                                    {{ "%.1f"|format(service.last_check.response_time * 1000) }} ms
+                                </span>
+                                {% else %}
+                                <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="/services/{{ service.id }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-graph-up"></i> Detay
+                                </a>
+                                <a href="/services/{{ service.id }}/edit" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-pencil"></i> Düzenle
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="p-4 text-center">
+                    <i class="bi bi-info-circle fs-2 text-muted mb-3"></i>
+                    <p>Henüz servis eklenmemiş.</p>
+                    <a href="/add/service" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i> Servis Ekle
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

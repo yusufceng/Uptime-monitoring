@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}Prometheus Ekle | OCP Mikro Servis Monitoring{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="fs-2">Prometheus Endpoint Ekle</h1>
+            <a href="/prometheus" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Prometheus'a Dön
+            </a>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="POST" action="/add/prometheus">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Endpoint Adı <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                        <div class="form-text">Endpoint'in tanımlayıcı adı</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="url" class="form-label">Prometheus URL <span class="text-danger">*</span></label>
+                        <input type="url" class="form-control" id="url" name="url" required>
+                        <div class="form-text">Prometheus API URL'i (örn: http://prometheus:9090)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="query" class="form-label">PromQL Sorgusu</label>
+                        <input type="text" class="form-control" id="query" name="query">
+                        <div class="form-text">İzlemek istediğiniz metrik için PromQL sorgusu (örn: up, node_memory_MemTotal_bytes)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Açıklama</label>
+                        <textarea class="form-control" id="description" name="description" rows="2"></textarea>
+                        <div class="form-text">Endpoint'i kısaca açıklayın (isteğe bağlı)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="check_interval" class="form-label">Kontrol Aralığı (saniye)</label>
+                        <input type="number" class="form-control" id="check_interval" name="check_interval" value="300" min="60">
+                        <div class="form-text">Metriğin ne sıklıkta toplanacağı</div>
+                    </div>
+                    
+                    <div class="text-end">
+                        <a href="/prometheus" class="btn btn-outline-secondary me-2">İptal</a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-plus-lg"></i> Prometheus Ekle
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

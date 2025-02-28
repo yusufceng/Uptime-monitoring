@@ -1,0 +1,240 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard | OCP Mikro Servis Monitoring{% endblock %}
+
+{% block body_attr %}id="dashboard-page"{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h1 class="fs-2 mb-3">Dashboard</h1>
+        
+        <!-- Özet İstatistikler -->
+        <div class="row mb-4">
+            <!-- Toplam Servis Sayısı -->
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <i class="bi bi-hdd-network me-2"></i> Toplam Servis
+                    </div>
+                    <div class="stats-card-body text-center">
+                        <div class="stats-value" id="total-services-count">
+                            {{ services|length }}
+                        </div>
+                        <div class="stats-label">Aktif Servis</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Çalışan Servisler -->
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <i class="bi bi-check-circle me-2"></i> Çalışan Servisler
+                    </div>
+                    <div class="stats-card-body text-center">
+                        <div class="stats-value text-success" id="up-services-count">
+                            {{ up_services|length }}
+                        </div>
+                        <div class="stats-label">Çalışıyor</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Çalışmayan Servisler -->
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <i class="bi bi-x-circle me-2"></i> Çalışmayan Servisler
+                    </div>
+                    <div class="stats-card-body text-center">
+                        <div class="stats-value text-danger" id="down-services-count">
+                            {{ down_services|length }}
+                        </div>
+                        <div class="stats-label">Çalışmıyor</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ortalama Yanıt Süresi -->
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <i class="bi bi-stopwatch me-2"></i> Ortalama Yanıt Süresi
+                    </div>
+                    <div class="stats-card-body text-center">
+                        <div class="stats-value" id="avg-response-time">
+                            {{ "%.1f"|format(average_response_time|default(0) * 1000) }} ms
+                        </div>
+                        <div class="stats-label">Son 24 Saat</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sistem Sağlığı Grafiği -->
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="chart-container">
+                    <div class="chart-title">
+                        <i class="bi bi-activity me-2"></i> Sistem Sağlığı
+                    </div>
+                    <div style="height: 250px;">
+                        <canvas id="system-health-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Servisler ve Prometheus -->
+        <div class="row">
+            <!-- Servis Listesi -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-hdd-network me-2"></i> Servisler
+                        </h5>
+                        <a href="/add/service" class="btn btn-sm btn-primary">
+                            <i class="bi bi-plus-lg"></i> Ekle
+                        </a>
+                    </div>
+                    <div class="card-body p-0">
+                        {% if services %}
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Servis</th>
+                                    <th>Durum</th>
+                                    <th>Yanıt Süresi</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="services-list">
+                                {% for service in services %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ service.name }}</strong>
+                                        {% if service.description %}
+                                        <small class="d-block text-muted">{{ service.description }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td id="service-status-{{ service.id }}">
+                                        {% if service.last_check and service.last_check.is_up %}
+                                        <span class="status-badge status-badge-up">
+                                            <i class="bi bi-check-circle"></i> Çalışıyor
+                                        </span>
+                                        {% elif service.last_check %}
+                                        <span class="status-badge status-badge-down">
+                                            <i class="bi bi-x-circle"></i> Çalışmıyor
+                                        </span>
+                                        {% else %}
+                                        <span class="status-badge status-badge-unknown">
+                                            <i class="bi bi-question-circle"></i> Bilinmiyor
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td id="service-response-time-{{ service.id }}">
+                                        {% if service.last_check %}
+                                        <span class="response-time {% if service.last_check.response_time < 0.3 %}response-fast{% elif service.last_check.response_time < 1 %}response-medium{% else %}response-slow{% endif %}">
+                                            <i class="bi bi-{% if service.last_check.response_time < 0.3 %}lightning-charge{% elif service.last_check.response_time < 1 %}stopwatch{% else %}hourglass-split{% endif %}"></i>
+                                            {{ "%.1f"|format(service.last_check.response_time * 1000) }} ms
+                                        </span>
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="/services/{{ service.id }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-graph-up"></i> Detay
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="p-4 text-center">
+                            <i class="bi bi-info-circle fs-2 text-muted mb-3"></i>
+                            <p>Henüz servis eklenmemiş.</p>
+                            <a href="/add/service" class="btn btn-primary">
+                                <i class="bi bi-plus-lg"></i> Servis Ekle
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Prometheus Endpoint'leri -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-graph-up me-2"></i> Prometheus
+                        </h5>
+                        <a href="/add/prometheus" class="btn btn-sm btn-primary">
+                            <i class="bi bi-plus-lg"></i> Ekle
+                        </a>
+                    </div>
+                    <div class="card-body p-0">
+                        {% if prometheus_endpoints %}
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Endpoint</th>
+                                    <th>URL</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for endpoint in prometheus_endpoints %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ endpoint.name }}</strong>
+                                        {% if endpoint.description %}
+                                        <small class="d-block text-muted">{{ endpoint.description }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">{{ endpoint.url }}</small>
+                                    </td>
+                                    <td>
+                                        <a href="/prometheus/{{ endpoint.id }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-graph-up"></i> Detay
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="p-4 text-center">
+                            <i class="bi bi-info-circle fs-2 text-muted mb-3"></i>
+                            <p>Henüz Prometheus endpoint'i eklenmemiş.</p>
+                            <a href="/add/prometheus" class="btn btn-primary">
+                                <i class="bi bi-plus-lg"></i> Prometheus Ekle
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sayfa yüklendiğinde sistem sağlığı grafiğini başlat
+        // Not: dashboard.js içindeki initDashboard fonksiyonu bu işi yapacak
+        
+        // 30 saniyelik otomatik yenileme için
+        setInterval(function() {
+            // AJAX çağrısı ile verileri güncelle
+        }, 30000);
+    });
+</script>
+{% endblock %}
