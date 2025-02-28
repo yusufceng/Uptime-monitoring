@@ -307,21 +307,74 @@ class Database:
     
     def get_service_stats(self, service_id, days=30):
         """Servis için istatistikleri hesaplar."""
-        conn = self.get_connection()
-        cursor = conn.cursor()
+        # Debug print ekleyin
+        print(f"DEBUG: get_service_stats() çağrıldı - Service ID: {service_id}, Days: {days}")
         
-        # Son X gündeki kontrolleri getir
-        cursor.execute('''
-        SELECT is_up, response_time, checked_at
-        FROM uptime_checks 
-        WHERE service_id = ? 
-        AND checked_at >= datetime('now', ? || ' days')
-        ''', (service_id, '-' + str(days)))
+        conn = None
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            
+            # Son X gündeki kontrolleri getir
+            print(f"DEBUG: Kontroller çekiliyor - Service ID: {service_id}, Son {days} gün")
+
+            cursor.execute('''
+            SELECT is_up, response_time, checked_at
+            FROM uptime_checks 
+            WHERE service_id = ? 
+            AND checked_at >= datetime('now', ?)
+            ''', (service_id, f'-{days} days'))
+            
+            checks = cursor.fetchall()
+
+            print(f"DEBUG: Çekilen kontrol sayısı: {len(checks)}")
+            
+            if not checks:
+                print("DEBUG: Hiç kontrol bulunamadı")
+                return {
+                    'uptime_percentage': 0,
+                    'avg_response_time': 0,
+                    'min_response_time': 0,
+                    'max_response_time': 0,
+                    'total_checks': 0,
+                    'up_checks': 0,
+                    'down_checks': 0
+                }
+            
+            # İstatistikleri hesapla
+            total_checks = len(checks)
+            up_checks = sum(1 for check in checks if check['is_up'])
+            down_checks = total_checks - up_checks
+            
+            uptime_percentage = (up_checks / total_checks * 100) if total_checks > 0 else 0
+            
+            response_times = [check['response_time'] for check in checks if check['response_time'] is not None]
+            avg_response_time = sum(response_times) / len(response_times) if response_times else 0
+            min_response_time = min(response_times) if response_times else 0
+            max_response_time = max(response_times) if response_times else 0
+            
+            # Hesaplanan istatistikleri debug et
+            print(f"DEBUG: İstatistikler - Uptime: {uptime_percentage}%, " 
+                f"Ortalama Yanıt Süresi: {avg_response_time}, "
+                f"Toplam Kontrol: {total_checks}, "
+                f"UP Kontrol: {up_checks}, "
+                f"DOWN Kontrol: {down_checks}")
+            
+            return {
+                'uptime_percentage': uptime_percentage,
+                'avg_response_time': avg_response_time,
+                'min_response_time': min_response_time,
+                'max_response_time': max_response_time,
+                'total_checks': total_checks,
+                'up_checks': up_checks,
+                'down_checks': down_checks
+            }
         
-        checks = cursor.fetchall()
-        conn.close()
-        
-        if not checks:
+        except Exception as e:
+            # Hata durumunda detaylı bilgi yazdır
+            print(f"DEBUG: get_service_stats() hatası - {str(e)}")
+            
+            # Hata durumunda varsayılan değerler
             return {
                 'uptime_percentage': 0,
                 'avg_response_time': 0,
@@ -332,27 +385,10 @@ class Database:
                 'down_checks': 0
             }
         
-        # İstatistikleri hesapla
-        total_checks = len(checks)
-        up_checks = sum(1 for check in checks if check['is_up'])
-        down_checks = total_checks - up_checks
-        
-        uptime_percentage = (up_checks / total_checks * 100) if total_checks > 0 else 0
-        
-        response_times = [check['response_time'] for check in checks if check['response_time'] is not None]
-        avg_response_time = sum(response_times) / len(response_times) if response_times else 0
-        min_response_time = min(response_times) if response_times else 0
-        max_response_time = max(response_times) if response_times else 0
-        
-        return {
-            'uptime_percentage': uptime_percentage,
-            'avg_response_time': avg_response_time,
-            'min_response_time': min_response_time,
-            'max_response_time': max_response_time,
-            'total_checks': total_checks,
-            'up_checks': up_checks,
-            'down_checks': down_checks
-        }
+        finally:
+            # Bağlantıyı her durumda kapat
+            if conn:
+                conn.close()
     
     # Prometheus endpoint işlemleri
     def add_prometheus_endpoint(self, name, url, query="", description="", check_interval=300):

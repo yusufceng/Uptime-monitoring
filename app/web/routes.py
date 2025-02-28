@@ -6,6 +6,7 @@ import os
 import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, flash, abort, current_app
 from .. import db
+import logging
 
 web_bp = Blueprint('web', __name__)
 
@@ -56,12 +57,26 @@ def services_list():
 
 @web_bp.route('/services/<int:service_id>')
 def service_detail(service_id):
-    """Servis detay sayfası."""
+    logging.info(f"Servis detayı isteği - Service ID: {service_id}")
+    print(f"Servis detayı isteği - Service ID: {service_id}")
+    
     service = db.get_service(service_id)
+    print(f"Bulunan Servis: {service}")
+    
     
     if not service:
+        print("Servis bulunamadı")
         flash('Servis bulunamadı', 'danger')
         return redirect(url_for('web.services_list'))
+    
+    # Diğer print() logları ekleyebilirsiniz
+    print(f"Uptime geçmişi çekiliyor: {service_id}")
+    history = db.get_uptime_history(service_id, limit=1000)
+    print(f"Uptime geçmişi: {history}")
+    
+    print("İstatistikler çekiliyor")
+    stats = db.get_service_stats(service_id)
+    print(f"Servis İstatistikleri: {stats}")
     
     # Uptime geçmişini al
     history = db.get_uptime_history(service_id, limit=1000)

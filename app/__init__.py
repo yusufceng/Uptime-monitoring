@@ -29,6 +29,14 @@ prometheus_collector = None
 def create_app(config_object=Config):
     """Flask uygulamasını oluşturur ve yapılandırır."""
     global db, uptime_monitor, prometheus_collector
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.StreamHandler(),  # Konsola log yazdırma
+            logging.FileHandler('app.log')  # Dosyaya log kaydetme
+        ]
+    )
     
     # Flask uygulamasını oluştur
     app = Flask(__name__, 
