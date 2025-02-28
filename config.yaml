@@ -1,0 +1,45 @@
+# Prometheus endpoint tanımları
+prometheus_endpoints:
+  - name: Kubernetes API
+    url: http://localhost:9090  # prometheus.example.com yerine prometheus
+    query: up
+    description: Kubernetes API ve bileşenlerin durumunu izler
+    check_interval: 300
+
+  - name: JVM Metrikleri
+    url: http://localhost:9090
+    query: jvm_memory_used_bytes
+    description: Java mikroservislerin JVM bellek kullanımını izler
+    check_interval: 300
+
+  - name: HTTP İstek Sayısı
+    url: http://localhost:9090
+    query: http_server_requests_seconds_count
+    description: Mikroservislere gelen HTTP istek sayısını izler
+    check_interval: 300
+
+  - name: CPU Kullanımı
+    url: http://localhost:9090
+    query: container_cpu_usage_seconds_total
+    description: Konteyner CPU kullanımını izler
+    check_interval: 300
+
+  - name: Bellek Kullanımı
+    url: http://localhost:9090
+    query: container_memory_usage_bytes
+    description: Konteyner bellek kullanımını izler
+    check_interval: 300
+
+    # Servis tanımları
+services:
+  - name: API Gateway
+    url: http://localhost:8081//status/200
+    description: API Gateway servisinin durumunu kontrol eder
+    check_interval: 30
+    timeout: 5
+
+  - name: Kullanıcı Servisi
+    url: http://localhost:8082//status/200
+    description: Kullanıcı yönetimi mikroservisi
+    check_interval: 60
+    timeout: 5
