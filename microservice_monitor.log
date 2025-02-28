@@ -1881,3 +1881,103 @@ jinja2.exceptions.TemplateNotFound: service_add.html
 2025-02-28 22:30:51,727 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
 2025-02-28 22:30:51,727 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
 2025-02-28 22:30:51,727 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 22:30:51] "GET /services/1 HTTP/1.1" 200 -
+2025-02-28 23:20:02,926 - microservice-monitor.database - INFO - Veritabanı şeması oluşturuldu: monitor.db
+2025-02-28 23:20:02,955 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.159:5001
+2025-02-28 23:20:02,955 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-02-28 23:20:02,955 - werkzeug - INFO -  * Restarting with stat
+2025-02-28 23:20:03,084 - microservice-monitor.database - INFO - Veritabanı şeması oluşturuldu: monitor.db
+2025-02-28 23:20:03,093 - werkzeug - WARNING -  * Debugger is active!
+2025-02-28 23:20:03,100 - werkzeug - INFO -  * Debugger PIN: 526-427-206
+2025-02-28 23:20:13,032 - microservice-monitor.uptime - INFO - Servis izleme başladı
+2025-02-28 23:20:13,032 - microservice-monitor.uptime - INFO - Uptime izleme servisi başlatıldı
+2025-02-28 23:20:13,033 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama başladı
+2025-02-28 23:20:13,033 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi başlatıldı
+2025-02-28 23:20:13,034 - microservice-monitor.uptime - INFO - Kontrol edilecek 5 servis bulundu
+2025-02-28 23:20:13,034 - microservice-monitor.uptime - INFO - Kontrol ediliyor: API Gateway - URL: http://localhost:8081//status/200
+2025-02-28 23:20:13,076 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:9090
+2025-02-28 23:20:13,077 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:8081
+2025-02-28 23:20:13,093 - microservice-monitor.database - INFO - Yeni servis eklendi: API Gateway (ID: 6)
+2025-02-28 23:20:13,094 - microservice-monitor.database - INFO - Yeni servis eklendi: Kullanıcı Servisi (ID: 7)
+2025-02-28 23:20:13,095 - microservice-monitor.database - INFO - Yeni Prometheus endpoint'i eklendi: Kubernetes API (ID: 11)
+2025-02-28 23:20:13,096 - microservice-monitor.database - INFO - Yeni Prometheus endpoint'i eklendi: JVM Metrikleri (ID: 12)
+2025-02-28 23:20:13,096 - urllib3.connectionpool - DEBUG - http://localhost:9090 "GET /api/v1/query?query=container_memory_usage_bytes HTTP/1.1" 200 93
+2025-02-28 23:20:13,096 - microservice-monitor.database - INFO - Yeni Prometheus endpoint'i eklendi: HTTP İstek Sayısı (ID: 13)
+2025-02-28 23:20:13,097 - microservice-monitor.prometheus - INFO - PromQL sorgusu çalıştırıldı: Bellek Kullanımı - container_memory_usage_bytes
+2025-02-28 23:20:13,097 - microservice-monitor.database - INFO - Yeni Prometheus endpoint'i eklendi: CPU Kullanımı (ID: 14)
+2025-02-28 23:20:13,098 - microservice-monitor.database - INFO - Yeni Prometheus endpoint'i eklendi: Bellek Kullanımı (ID: 15)
+2025-02-28 23:20:13,098 - microservice-monitor.utils - INFO - Konfigürasyon içe aktarıldı: config.yaml
+2025-02-28 23:20:13,121 - urllib3.connectionpool - DEBUG - http://localhost:8081 "GET //status/200 HTTP/1.1" 200 0
+2025-02-28 23:20:13,123 - microservice-monitor.uptime - INFO - Servis kontrolü: API Gateway - Durum: UP, Yanıt Süresi: 0.087s
+2025-02-28 23:20:13,123 - microservice-monitor.uptime - INFO - Kontrol sonucu: API Gateway - Durum: UP
+2025-02-28 23:20:13,628 - microservice-monitor.uptime - INFO - Kontrol ediliyor: API Gateway - URL: http://localhost:8081//status/200
+2025-02-28 23:20:13,632 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:8081
+2025-02-28 23:20:13,639 - urllib3.connectionpool - DEBUG - http://localhost:8081 "GET //status/200 HTTP/1.1" 200 0
+2025-02-28 23:20:13,642 - microservice-monitor.uptime - INFO - Servis kontrolü: API Gateway - Durum: UP, Yanıt Süresi: 0.011s
+2025-02-28 23:20:13,643 - microservice-monitor.uptime - INFO - Kontrol sonucu: API Gateway - Durum: UP
+2025-02-28 23:20:14,102 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:9090
+2025-02-28 23:20:14,111 - urllib3.connectionpool - DEBUG - http://localhost:9090 "GET /api/v1/query?query=container_memory_usage_bytes HTTP/1.1" 200 93
+2025-02-28 23:20:14,111 - microservice-monitor.prometheus - INFO - PromQL sorgusu çalıştırıldı: Bellek Kullanımı - container_memory_usage_bytes
+2025-02-28 23:20:14,146 - microservice-monitor.uptime - INFO - Kontrol ediliyor: Kullanıcı Servisi - URL: http://localhost:8082//status/200
+2025-02-28 23:20:14,147 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:8082
+2025-02-28 23:20:14,192 - urllib3.connectionpool - DEBUG - http://localhost:8082 "GET //status/200 HTTP/1.1" 200 0
+2025-02-28 23:20:14,194 - microservice-monitor.uptime - INFO - Servis kontrolü: Kullanıcı Servisi - Durum: UP, Yanıt Süresi: 0.047s
+2025-02-28 23:20:14,195 - microservice-monitor.uptime - INFO - Kontrol sonucu: Kullanıcı Servisi - Durum: UP
+2025-02-28 23:20:14,700 - microservice-monitor.uptime - INFO - Kontrol ediliyor: Kullanıcı Servisi - URL: http://localhost:8082//status/200
+2025-02-28 23:20:14,704 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:8082
+2025-02-28 23:20:14,715 - urllib3.connectionpool - DEBUG - http://localhost:8082 "GET //status/200 HTTP/1.1" 200 0
+2025-02-28 23:20:14,719 - microservice-monitor.uptime - INFO - Servis kontrolü: Kullanıcı Servisi - Durum: UP, Yanıt Süresi: 0.015s
+2025-02-28 23:20:14,720 - microservice-monitor.uptime - INFO - Kontrol sonucu: Kullanıcı Servisi - Durum: UP
+2025-02-28 23:20:15,121 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:9090
+2025-02-28 23:20:15,131 - urllib3.connectionpool - DEBUG - http://localhost:9090 "GET /api/v1/query?query=container_cpu_usage_seconds_total HTTP/1.1" 200 93
+2025-02-28 23:20:15,132 - microservice-monitor.prometheus - INFO - PromQL sorgusu çalıştırıldı: CPU Kullanımı - container_cpu_usage_seconds_total
+2025-02-28 23:20:15,225 - microservice-monitor.uptime - INFO - Kontrol ediliyor: demo-service-1 - URL: http://localhost:8082/status/200
+2025-02-28 23:20:15,228 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:8082
+2025-02-28 23:20:15,235 - urllib3.connectionpool - DEBUG - http://localhost:8082 "GET /status/200 HTTP/1.1" 200 0
+2025-02-28 23:20:15,238 - microservice-monitor.uptime - INFO - Servis kontrolü: demo-service-1 - Durum: UP, Yanıt Süresi: 0.010s
+2025-02-28 23:20:15,239 - microservice-monitor.uptime - INFO - Kontrol sonucu: demo-service-1 - Durum: UP
+2025-02-28 23:20:15,744 - microservice-monitor.uptime - INFO - Tüm servisler kontrol edildi, bekleniyor...
+2025-02-28 23:20:16,139 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:9090
+2025-02-28 23:20:16,145 - urllib3.connectionpool - DEBUG - http://localhost:9090 "GET /api/v1/query?query=container_cpu_usage_seconds_total HTTP/1.1" 200 93
+2025-02-28 23:20:16,146 - microservice-monitor.prometheus - INFO - PromQL sorgusu çalıştırıldı: CPU Kullanımı - container_cpu_usage_seconds_total
+2025-02-28 23:20:17,150 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:9090
+2025-02-28 23:20:17,156 - urllib3.connectionpool - DEBUG - http://localhost:9090 "GET /api/v1/query?query=http_server_requests_seconds_count HTTP/1.1" 200 93
+2025-02-28 23:20:17,157 - microservice-monitor.prometheus - INFO - PromQL sorgusu çalıştırıldı: HTTP İstek Sayısı - http_server_requests_seconds_count
+2025-02-28 23:20:18,165 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:9090
+2025-02-28 23:20:18,179 - urllib3.connectionpool - DEBUG - http://localhost:9090 "GET /api/v1/query?query=http_server_requests_seconds_count HTTP/1.1" 200 93
+2025-02-28 23:20:18,180 - microservice-monitor.prometheus - INFO - PromQL sorgusu çalıştırıldı: HTTP İstek Sayısı - http_server_requests_seconds_count
+2025-02-28 23:20:19,190 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:9090
+2025-02-28 23:20:19,213 - urllib3.connectionpool - DEBUG - http://localhost:9090 "GET /api/v1/query?query=jvm_memory_used_bytes HTTP/1.1" 200 93
+2025-02-28 23:20:19,214 - microservice-monitor.prometheus - INFO - PromQL sorgusu çalıştırıldı: JVM Metrikleri - jvm_memory_used_bytes
+2025-02-28 23:20:20,223 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:9090
+2025-02-28 23:20:20,232 - urllib3.connectionpool - DEBUG - http://localhost:9090 "GET /api/v1/query?query=jvm_memory_used_bytes HTTP/1.1" 200 93
+2025-02-28 23:20:20,233 - microservice-monitor.prometheus - INFO - PromQL sorgusu çalıştırıldı: JVM Metrikleri - jvm_memory_used_bytes
+2025-02-28 23:20:20,750 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:20:30,752 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:20:30,755 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:20:30] "GET / HTTP/1.1" 200 -
+2025-02-28 23:20:30,827 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:20:30,828 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:20:40,833 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:20:40,834 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:20:40,836 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:20:40] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-02-28 23:20:40,836 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:20:40] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-02-28 23:20:40,884 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:20:40,889 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:20:41,004 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:20:46,828 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:20:50,885 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:20:50,904 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:20:50] "GET /api/stats/summary HTTP/1.1" 200 -
+2025-02-28 23:20:50,905 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:20:50,906 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:20:50] "GET /api/services HTTP/1.1" 200 -
+2025-02-28 23:20:51,004 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:20:51,005 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:20:51] "[33mGET /static/img/favicon.ico HTTP/1.1[0m" 404 -
+2025-02-28 23:20:56,833 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:20:56,834 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:20:56] "GET /services/1 HTTP/1.1" 200 -
+2025-02-28 23:20:56,908 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:21:06,914 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:21:06,916 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:21:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-28 23:21:10,517 - microservice-monitor.uptime - INFO - Uptime izleme servisi durduruldu
+2025-02-28 23:21:20,522 - microservice-monitor.prometheus - INFO - Prometheus metrik toplama servisi durduruldu
+2025-02-28 23:21:20,524 - werkzeug - INFO - 127.0.0.1 - - [28/Feb/2025 23:21:20] "GET /services/1 HTTP/1.1" 200 -
